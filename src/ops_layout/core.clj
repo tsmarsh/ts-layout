@@ -4,8 +4,14 @@
             [hiccup.core :as h]
             [org.httpkit.server :as hk]))
 
+(def boxes ["/1" "/2"])
+
+(defn draw-box [url]
+  (h/html [:iframe {:src url}]))
+
 (defroutes app
-  (GET "/" [] (h/html [:h1 "Hello, Fatass!"]))
+  (GET "/:number" [number] (h/html [:h1 {:class "number"} number]))
+  (GET "/" []  (map draw-box boxes))
   (route/not-found (h/html [:h1 "Dumbass"])))
 
 (defonce server (atom nil))
