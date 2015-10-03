@@ -6,6 +6,10 @@
             [ring.util.response :as rr]
             [org.httpkit.server :as hk]))
 
+(defn page [content] (h/html {:lang "en"}
+                      [:head [:title "Dashboard"]]
+                      [:body content]))
+
 (def boxes (atom ["/1" "/2"]))
 
 (defn draw-box [idx url]
@@ -14,8 +18,12 @@
            [:a {:href (str "/boxes/" idx "/down")} "Down"]
            [:iframe {:src url}]]))
 
-(defn swap [v i1 i2] 
-  (assoc v i2 (v i1) i1 (v i2)))
+(defn swap [v i1 i2]
+  (let [i1' (mod i1 (count v))
+        i2' (mod i2 (count v))
+        i1'' (min i1' i2')
+        i2'' (max i1' i2')]
+    (assoc v i2'' (v i1'') i1'' (v i2''))))
 
 (defn push-box-up [idx]
    (reset! boxes (swap @boxes (dec idx) idx)))
@@ -31,7 +39,7 @@
            (GET "/down" [] (do 
                              (push-box-down index)
                              (rr/redirect "/boxes"))))
-  (GET "/boxes" []  (map-indexed draw-box @boxes))
+  (GET "/boxes" []  (page (map-indexed draw-box @boxes)))
   (GET "/:number" [number] (h/html [:h1 {:class "number"} number]))
   (GET "/" [] (rr/redirect "/boxes"))
   (route/not-found (h/html [:h1 "Dumbass"])))
