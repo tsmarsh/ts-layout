@@ -1,6 +1,9 @@
+[![Build Status](https://travis-ci.org/tsmarsh/ts-layout.svg)](https://travis-ci.org/tsmarsh/ts-layout)
+[![Coverage Status](https://coveralls.io/repos/tsmarsh/ts-layout/badge.svg?branch=master&service=github)](https://coveralls.io/github/tsmarsh/ts-layout?branch=master)
+
 # ops-layout
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure service that will allow easy building of dashboard like applications.
 
 ## Usage
 
@@ -8,7 +11,4 @@ FIXME
 
 ## License
 
-Copyright © 2015 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+BSD 3 Clause
