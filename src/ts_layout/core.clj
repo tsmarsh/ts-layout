@@ -30,11 +30,9 @@
         (reload))
   (GET "/boxes" []  (v/page (map-indexed v/draw-box @boxes)))
   (GET "/:number" [number :<< as-int]
-       (h/html
-        [:head [:title (str "Number: " number)]]
-        [:body [:h1 {:class "number"} number]]))
+       (v/numero number))
   (GET "/" [] (rr/redirect "/boxes"))
-  (route/not-found (h/html [:h1 "Dumbass"])))
+  (route/not-found (v/missing)))
 
 (defonce server (atom nil))
 
