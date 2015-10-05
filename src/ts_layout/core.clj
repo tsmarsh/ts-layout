@@ -26,7 +26,7 @@
            (GET "/delete" [] (do
                                (persist!  (m/delete-box @boxes index))
                               (reload))))
-  (POST "/boxes/add" [params] (m/add-box @boxes params)
+  (POST "/boxes/add" [params] (persist! (m/add-box @boxes params))
         (reload))
   (GET "/boxes" []  (v/page (map-indexed v/draw-box @boxes)))
   (GET "/:number" [number :<< as-int]

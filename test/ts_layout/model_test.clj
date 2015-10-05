@@ -1,4 +1,4 @@
-(ns ts-layout.model_test
+(ns ts-layout.model-test
   (:require [ts-layout.model :refer :all]
             [clojure.test :refer :all]))
 
