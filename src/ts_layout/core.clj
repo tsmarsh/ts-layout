@@ -16,6 +16,9 @@
 (defn reload []
   (rr/redirect "/boxes"))
 
+(defn get-form-param [body param]
+  (get (rc/form-decode body) param))
+
 (defroutes app
   (context "/boxes/:index" [index :<< as-int]
            (GET "/up" [] (do 
@@ -27,7 +30,10 @@
            (GET "/delete" [] (do
                                (persist!  (m/delete-box @boxes index))
                               (reload))))
-  (POST "/boxes/add" {body :body} (persist! (m/add-box @boxes (get (rc/form-decode (slurp body)) "url")))
+  (POST "/boxes/add"
+        {body-stream :body} (let [body (slurp body-stream)]
+                              (persist!
+                               (m/add-box @boxes (get-form-param body "url"))))
         (reload))
   (GET "/boxes" []  (v/page (map-indexed v/draw-box @boxes)))
   (GET "/:number" [number :<< as-int]
