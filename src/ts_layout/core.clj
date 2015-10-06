@@ -3,6 +3,7 @@
             [compojure.coercions :refer :all]
             [compojure.route :as route] 
             [ring.util.response :as rr]
+            [ring.util.codec :as rc]
             [org.httpkit.server :as hk]
             [ts-layout.model :as m]
             [ts-layout.views :as v]))
@@ -26,7 +27,7 @@
            (GET "/delete" [] (do
                                (persist!  (m/delete-box @boxes index))
                               (reload))))
-  (POST "/boxes/add" [params] (persist! (m/add-box @boxes params))
+  (POST "/boxes/add" {body :body} (persist! (m/add-box @boxes (get (rc/form-decode (slurp body)) "url")))
         (reload))
   (GET "/boxes" []  (v/page (map-indexed v/draw-box @boxes)))
   (GET "/:number" [number :<< as-int]

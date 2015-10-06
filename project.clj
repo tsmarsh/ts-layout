@@ -7,6 +7,7 @@
                  [compojure "1.4.0"]
                  [hiccup "1.0.5"]
                  [ring "1.4.0"]
-                 [http-kit "2.1.18"]]
+                 [http-kit "2.1.18"]
+                 [ring/ring-codec "1.0.0"]]
   :plugins [[lein-cloverage "1.0.6"]
             [lein-cljfmt "0.1.12"]])
