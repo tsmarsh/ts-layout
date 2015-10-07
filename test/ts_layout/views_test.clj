@@ -3,7 +3,8 @@
             [clojure.test :refer :all]))
 
 (deftest furniture
-  (is (= "<head><title>Dashboard</title></head><body><form action=\"/boxes/add\" method=\"POST\"><input name=\"url\" /><input type=\"submit\" value=\"Add\" /></form>foo</body>" (page "foo"))))
+  (is (=  "<head><title>Dashboard</title><link href=\"/public/layout.css\" rel=\"stylesheet\" /></head><body><form action=\"/boxes/add\" method=\"POST\"><input name=\"url\" /><input type=\"submit\" value=\"Add\" /></form>foo</body>"
+ (page "foo"))))
 
 (deftest box
   (is (= "<div class=\"box\"><a href=\"/boxes/0/up\">Up</a><a href=\"/boxes/0/down\">Down</a><a href=\"/boxes/0/delete\">Delete</a><iframe src=\"/1\"></iframe></div>"
