@@ -3,13 +3,13 @@
             [ts-layout.core :refer :all]))
 
 (defn request [resource web-app method & params]
-   (web-app {:request-method method :uri resource :params (first params)}))
+   )
 
 (defn get-it [resource web-app & params]
-  (apply (partial request resource web-app :get) params))
+  (web-app {:request-method :get :uri resource :params (first params)}))
 
-(defn post-it [resource web-app & params]
-  (apply (partial request resource web-app :post) params))
+(defn post-it [resource web-app body]
+  (web-app {:request-method :post :uri resource :body (java.io.ByteArrayInputStream. (.getBytes body))}))
 
 (deftest root
   (let [response (get-it "/" app)]
@@ -32,5 +32,10 @@
 
 (deftest delete
   (let [response (get-it "/boxes/0/delete" app)]
+    (is (= 302 (:status response)))
+    (is (= {"Location" "/boxes"} (:headers response)))))
+
+(deftest add
+  (let [response (post-it "/boxes/add" app "url=floop")]
     (is (= 302 (:status response)))
     (is (= {"Location" "/boxes"} (:headers response)))))
