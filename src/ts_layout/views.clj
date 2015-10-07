@@ -7,7 +7,8 @@
            [:input {:type "submit" :value "Add"}]]))
 
 (defn page [content] (h/html
-                      [:head [:title "Dashboard"]]
+                      [:head [:title "Dashboard"]
+                       [:link {:rel "stylesheet" :href "/public/layout.css"}]]
                       [:body
                        nav
                        content]))

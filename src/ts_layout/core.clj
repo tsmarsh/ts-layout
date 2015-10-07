@@ -29,7 +29,7 @@
                              (reload)))
            (GET "/delete" [] (do
                                (persist!  (m/delete-box @boxes index))
-                              (reload))))
+                               (reload))))
   (POST "/boxes/add"
         {body-stream :body} (let [body (slurp body-stream)]
                               (persist!
@@ -39,6 +39,7 @@
   (GET "/:number" [number :<< as-int]
        (v/numero number))
   (GET "/" [] (rr/redirect "/boxes"))
+  (route/resources "/public")
   (route/not-found (v/missing)))
 
 (defonce server (atom nil))
